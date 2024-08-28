@@ -1,0 +1,26 @@
+server.port: 8080
+server.host: 0.0.0.0
+
+mp:
+  messaging:
+    connector:
+      helidon-jms:
+        jndi:
+          jms-factory: jms/TestConnectionFactory
+          env-properties:
+            java.naming.factory.initial: weblogic.jndi.WLInitialContextFactory
+            java.naming.provider.url: t3://localhost:7001
+    incoming:
+      from-wls-1:
+        connector: helidon-jms
+        destination: ./TestJMSMOdule!TestJMSQueue
+      from-wls-2:
+        connector: helidon-jms
+        destination: ./TestJMSMOdule!TestJMSQueue-2
+    outgoing:
+      to-wls-1:
+        connector: helidon-jms
+        destination: ./TestJMSMOdule!TestJMSQueue
+      to-wls-2:
+        connector: helidon-jms
+        destination: ./TestJMSMOdule!TestJMSQueue-2
