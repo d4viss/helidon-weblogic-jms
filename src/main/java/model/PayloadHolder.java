@@ -1,6 +1,6 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,15 +10,16 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PayloadHolder {
 
-    @JsonProperty("payload")
-    private String payload;
-    @JsonProperty("correlationId")
-    private String correlationId;
-    @JsonProperty("destination")
+    @JacksonXmlProperty(localName = "message")
+    private String message;
+
+    @JacksonXmlProperty(localName = "destination")
     private Constants destination;
+
+    private String correlationId;
 
     @Override
     public String toString() {
-        return "PayloadHolder [payload=" + payload + ", correlationId=" + correlationId + ", destination=" + destination + "]";
+        return "PayloadHolder [message=" + message + ", correlationId=" + correlationId + ", destination=" + destination + "]";
     }
 }

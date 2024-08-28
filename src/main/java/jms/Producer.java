@@ -1,6 +1,6 @@
 package jms;
 
-import data.GenerateJsonFromObj;
+import data.GenerateXMLFromPojo;
 import model.PayloadHolder;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.reactivestreams.FlowAdapters;
@@ -43,7 +43,7 @@ public class Producer {
      * @param payload
      */
     private void submitEmitter(SubmissionPublisher<String> emitter, PayloadHolder payload) {
-        emitter.submit(GenerateJsonFromObj.convert(payload));
+        emitter.submit(GenerateXMLFromPojo.convert(payload));
     }
 
     /**
