@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
     <groupId>me.kec-helidon</groupId>
-    <artifactId>helidon-wls-jms-demo</artifactId>
+    <artifactId>helidon-weblogic-jms</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>helidon-wls-jms-demo</name>
+    <name>helidon-weblogic-jms</name>
 
     <dependencies>
         <dependency>

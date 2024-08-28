@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PayloadHolder {
 
-    @JsonProperty("message")
-    private String message;
+    @JsonProperty("payload")
+    private String payload;
     @JsonProperty("correlationId")
     private String correlationId;
     @JsonProperty("destination")
@@ -19,6 +19,6 @@ public class PayloadHolder {
 
     @Override
     public String toString() {
-        return "PayloadHolder [payload=" + message + ", correlationId=" + correlationId + ", destination=" + destination + "]";
+        return "PayloadHolder [payload=" + payload + ", correlationId=" + correlationId + ", destination=" + destination + "]";
     }
 }
