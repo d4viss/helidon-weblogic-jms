@@ -1,6 +1,6 @@
+model\Destination.class
 data\GenerateXMLFromPojo.class
 jms\Producer.class
-model\Constants.class
 jms\Listener.class
 model\PayloadHolder.class
 jms\Producer$1.class
