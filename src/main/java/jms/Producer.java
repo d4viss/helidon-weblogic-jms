@@ -8,7 +8,6 @@ import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.eclipse.microprofile.reactive.streams.operators.PublisherBuilder;
 import org.eclipse.microprofile.reactive.streams.operators.ReactiveStreams;
 import org.reactivestreams.FlowAdapters;
-import org.reactivestreams.Publisher;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.jms.JMSException;
@@ -81,10 +80,6 @@ public class Producer {
      *
      * @return
      */
-//    @Outgoing("to-wls-1")
-//    public Publisher<String> produceTestQueue() {
-//        return FlowAdapters.toPublisher(emitterTestQueue);
-//    }
     @Outgoing("to-wls-1")
     public PublisherBuilder<Message<String>> produceTestQueue1() {
         return this.produceMessage(emitterTestQueue);
@@ -94,10 +89,6 @@ public class Producer {
      * to send a message to a queue
      * @return
      */
-//    @Outgoing("to-wls-2")
-//    public Publisher<String> produceTestQueue2() {
-//        return FlowAdapters.toPublisher(emitterTestQueue2);
-//    }
     @Outgoing("to-wls-2")
     public PublisherBuilder<Message<String>> produceTestQueue2() {
         return this.produceMessage(emitterTestQueue2);

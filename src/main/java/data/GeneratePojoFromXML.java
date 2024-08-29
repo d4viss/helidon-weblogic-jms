@@ -14,7 +14,6 @@ public class GeneratePojoFromXML {
 
     public static PayloadHolder convert(JmsMessage<String> entry) {
         String payload = entry.getPayload();
-        System.out.println("payload: " + payload);
         String correlationId = entry.getCorrelationId();
 
         XmlMapper xmlMapper = new XmlMapper();
@@ -25,6 +24,6 @@ public class GeneratePojoFromXML {
             System.out.println("XmlProcessingException: " + e.getMessage());
         }
 
-        return new PayloadHolder((String) map.get("message"), Constants.valueOf(map.get("destination")), correlationId);
+        return new PayloadHolder(map.get("message"), Constants.valueOf(map.get("destination")), correlationId);
     }
 }

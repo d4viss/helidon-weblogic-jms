@@ -23,9 +23,6 @@ public class Listener {
      */
     @Incoming("from-wls-1")
     public void receiveTestQueue1(JmsMessage<String> msg) {
-        PayloadHolder holder = GeneratePojoFromXML.convert(msg);
-        System.out.println(holder);
-
         producer.submit(GeneratePojoFromXML.convert(msg));
     }
 }
