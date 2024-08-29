@@ -1,6 +1,10 @@
 server.port: 8080
 server.host: 0.0.0.0
 
+wls-username: admin
+wls-password: admin0000
+wls-admin-url: t3://localhost:7001
+
 mp:
   messaging:
     connector:
@@ -9,7 +13,9 @@ mp:
           jms-factory: jms/TestConnectionFactory
           env-properties:
             java.naming.factory.initial: weblogic.jndi.WLInitialContextFactory
-            java.naming.provider.url: t3://localhost:7001
+            java.naming.provider.url: ${wls-admin-url}
+            java.naming.security.principal: ${wls-username}
+            java.naming.security.credentials: ${wls-password}
     incoming:
       from-wls-1:
         connector: helidon-jms
