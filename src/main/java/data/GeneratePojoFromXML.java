@@ -4,14 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.helidon.messaging.connectors.jms.JmsMessage;
 import model.Destination;
-import model.PayloadHolder;
+import model.JmsMessageHolder;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GeneratePojoFromXML {
 
-    public static PayloadHolder convert(JmsMessage<String> entry) {
+    public static JmsMessageHolder convert(JmsMessage<String> entry) {
         String payload = entry.getPayload();
         String correlationId = entry.getCorrelationId();
 
@@ -23,6 +23,6 @@ public class GeneratePojoFromXML {
             System.out.println("XmlProcessingException: " + e.getMessage());
         }
 
-        return new PayloadHolder(map.get("message"), Destination.valueOf(map.get("destination")), correlationId);
+        return new JmsMessageHolder(map.get("message"), Destination.valueOf(map.get("destination")), correlationId);
     }
 }

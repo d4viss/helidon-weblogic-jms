@@ -2,6 +2,6 @@ model\Destination.class
 data\GenerateXMLFromPojo.class
 jms\Producer.class
 jms\Listener.class
-model\PayloadHolder.class
 jms\Producer$1.class
 data\GeneratePojoFromXML.class
+model\JmsMessageHolder.class

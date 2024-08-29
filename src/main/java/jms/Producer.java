@@ -2,7 +2,7 @@ package jms;
 
 import data.GenerateXMLFromPojo;
 import io.helidon.messaging.connectors.jms.JmsMessage;
-import model.PayloadHolder;
+import model.JmsMessageHolder;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.eclipse.microprofile.reactive.streams.operators.PublisherBuilder;
@@ -22,18 +22,18 @@ public class Producer {
     private String correlationId = "";
     /**
      * classify a payload
-     * @param payload payload received
+     * @param holder payload received
      */
-    public void submit(PayloadHolder payload) {
+    public void submit(JmsMessageHolder holder) {
         try {
-            switch (payload.getDestination()){
+            switch (holder.getDestination()){
                 case DEST_TEST_QUEUE:
-                    this.correlationId = payload.getCorrelationId();
-                    submitEmitter(emitterTestQueue, payload);
+                    this.correlationId = holder.getCorrelationId();
+                    submitEmitter(emitterTestQueue, holder);
                     break;
                 case DEST_TEST_QUEUE_2:
-                    this.correlationId = payload.getCorrelationId();
-                    submitEmitter(emitterTestQueue2, payload);
+                    this.correlationId = holder.getCorrelationId();
+                    submitEmitter(emitterTestQueue2, holder);
                     break;
                 default:
                     System.out.println("No matching destination");
@@ -47,10 +47,10 @@ public class Producer {
     /**
      * send the payload with an emitter
      * @param emitter
-     * @param payload
+     * @param holder
      */
-    private void submitEmitter(SubmissionPublisher<String> emitter, PayloadHolder payload) {
-        emitter.submit(GenerateXMLFromPojo.convert(payload));
+    private void submitEmitter(SubmissionPublisher<String> emitter, JmsMessageHolder holder) {
+        emitter.submit(GenerateXMLFromPojo.convert(holder));
     }
 
     /**

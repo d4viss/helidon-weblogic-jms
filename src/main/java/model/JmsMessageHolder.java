@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @JacksonXmlRootElement(localName = "root")
-public class PayloadHolder {
+public class JmsMessageHolder {
 
     @JacksonXmlProperty(localName = "message")
     private String message;

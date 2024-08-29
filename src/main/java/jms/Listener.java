@@ -2,7 +2,6 @@ package jms;
 
 import data.GeneratePojoFromXML;
 import io.helidon.messaging.connectors.jms.JmsMessage;
-import model.PayloadHolder;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
