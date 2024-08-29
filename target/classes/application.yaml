@@ -13,10 +13,7 @@ mp:
     incoming:
       from-wls-1:
         connector: helidon-jms
-        destination: ./TestJMSMOdule!TestJMSQueue
-      from-wls-2:
-        connector: helidon-jms
-        destination: ./TestJMSMOdule!TestJMSQueue-2
+        destination: ./TestJMSMOdule!TestReceiveQueue
     outgoing:
       to-wls-1:
         connector: helidon-jms

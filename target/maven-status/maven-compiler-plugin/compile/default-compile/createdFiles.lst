@@ -1,8 +1,7 @@
+data\GenerateXMLFromPojo.class
 jms\Producer.class
-bean\RequestBean.class
 model\Constants.class
-controller\Controller.class
 jms\Listener.class
-data\GenerateJsonFromObj.class
 model\PayloadHolder.class
 jms\Producer$1.class
+data\GeneratePojoFromXML.class

@@ -1,12 +1,18 @@
 package jms;
 
 import data.GenerateXMLFromPojo;
+import io.helidon.messaging.connectors.jms.JmsMessage;
 import model.PayloadHolder;
+import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
+import org.eclipse.microprofile.reactive.streams.operators.PublisherBuilder;
+import org.eclipse.microprofile.reactive.streams.operators.ReactiveStreams;
 import org.reactivestreams.FlowAdapters;
 import org.reactivestreams.Publisher;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.jms.JMSException;
+import javax.jms.TextMessage;
 import java.util.concurrent.SubmissionPublisher;
 
 @ApplicationScoped
@@ -14,7 +20,7 @@ public class Producer {
 
     private final SubmissionPublisher<String> emitterTestQueue = new SubmissionPublisher<>();
     private final SubmissionPublisher<String> emitterTestQueue2 = new SubmissionPublisher<>();
-
+    private String correlationId = "";
     /**
      * classify a payload
      * @param payload payload received
@@ -23,9 +29,11 @@ public class Producer {
         try {
             switch (payload.getDestination()){
                 case DEST_TEST_QUEUE:
+                    this.correlationId = payload.getCorrelationId();
                     submitEmitter(emitterTestQueue, payload);
                     break;
                 case DEST_TEST_QUEUE_2:
+                    this.correlationId = payload.getCorrelationId();
                     submitEmitter(emitterTestQueue2, payload);
                     break;
                 default:
@@ -47,20 +55,51 @@ public class Producer {
     }
 
     /**
-     * to send a message to a queue
+     * create the publisher to send the JmsMessage
+     * @param emitter
      * @return
      */
+    private PublisherBuilder<Message<String>> produceMessage(SubmissionPublisher<String> emitter) {
+        return ReactiveStreams.
+                fromPublisher(FlowAdapters.toPublisher(emitter))
+                .map(s -> JmsMessage.builder(s)
+                        .customMapper((p, session) -> {
+                            TextMessage textMessage = null;
+                            try {
+                                textMessage = session.createTextMessage(p);
+                                textMessage.setJMSCorrelationID(this.correlationId);
+                            }catch (JMSException e) {
+                                System.out.println("Error in creating message: " + e.getMessage());
+                            }
+                            return textMessage;
+                        })
+                        .build());
+    }
+
+    /**
+     * to send a message to a queue
+     *
+     * @return
+     */
+//    @Outgoing("to-wls-1")
+//    public Publisher<String> produceTestQueue() {
+//        return FlowAdapters.toPublisher(emitterTestQueue);
+//    }
     @Outgoing("to-wls-1")
-    public Publisher<String> produceTestQueue() {
-        return FlowAdapters.toPublisher(emitterTestQueue);
+    public PublisherBuilder<Message<String>> produceTestQueue1() {
+        return this.produceMessage(emitterTestQueue);
     }
 
     /**
      * to send a message to a queue
      * @return
      */
+//    @Outgoing("to-wls-2")
+//    public Publisher<String> produceTestQueue2() {
+//        return FlowAdapters.toPublisher(emitterTestQueue2);
+//    }
     @Outgoing("to-wls-2")
-    public Publisher<String> produceTestQueue2() {
-        return FlowAdapters.toPublisher(emitterTestQueue2);
+    public PublisherBuilder<Message<String>> produceTestQueue2() {
+        return this.produceMessage(emitterTestQueue2);
     }
 }
