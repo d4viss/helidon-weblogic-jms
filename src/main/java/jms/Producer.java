@@ -19,6 +19,7 @@ public class Producer {
 
     private final SubmissionPublisher<String> emitterTestQueue = new SubmissionPublisher<>();
     private final SubmissionPublisher<String> emitterTestQueue2 = new SubmissionPublisher<>();
+
     private String correlationId = "";
     /**
      * classify a payload
@@ -77,7 +78,6 @@ public class Producer {
 
     /**
      * to send a message to a queue
-     *
      * @return
      */
     @Outgoing("to-wls-1")
